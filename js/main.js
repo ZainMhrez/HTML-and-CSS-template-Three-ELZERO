@@ -24,14 +24,36 @@ let countdown = setInterval(() => {
     }
 }, 1000);
 
-// Animate width on scrolling (Skills Section)
+
 let section = document.querySelector(".our-skills");
 let progSpans = document.querySelectorAll(".the-progress span");
 
+let number = document.querySelectorAll(".number");
+let numSection = document.querySelector(".stats");
+let on = false;
+
 window.onscroll = function () {
+    // Animate width on scrolling (Skills Section)
     if(window.scrollY >= section.offsetTop - 300) {
         progSpans.forEach((span) => {
             span.style.width = span.dataset.width;
         });
     }
+    // Increase numbers on scrolling
+    if(window.scrollY >= numSection.offsetTop - 300) {
+        if(!on) {
+            number.forEach((el) => increaseNums(el));
+        }
+        on = true;
+    }
+}
+
+function increaseNums(num) {
+    let goal = num.dataset.goal;
+    let counter = setInterval(() => {
+        num.textContent++;
+        if(num.textContent == goal) {
+            clearInterval(counter);
+        }
+    }, 1500 / goal);
 }
